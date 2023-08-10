@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+</head>
+
+<body>
+    <h1 class="alert alert-secondary text-center mt-2">To Do List</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <h4 class="alert alert-dark text-center">Add Todays ToDo</h4>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{fm.as_p}}
+                <input type="submit" class="btn btn-outline-dark" value="Add Todo">
+            </form>
+        </div>
+        <div class="offset-2 col-md-4">
+            <h4 class="alert alert-secondary text-center" >ToDos</h4>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">To Do</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in to %}
+                    <tr>
+                        <th scope="row">{{i.id}}</th>
+                        <td>{{i.todolist}}</td>
+                        <td>
+                            <a href="{% url 'update' i.id %}" class="btn btn-outline-warning btn-sm">Update</a>
+                            <form action="{% url 'delete' i.id %}" method="post" class="d-inline">
+                                 {% csrf_token %}
+                                <input type="submit" value="Delete" class="btn btn-outline-danger btn-sm">
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="{% static 'bootstrap.js' %}"></script>
+    <script src="{% static 'jquery.js' %}"></script>
+</body>
+
+</html>
